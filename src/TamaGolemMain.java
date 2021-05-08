@@ -1,5 +1,3 @@
-import it.unibs.fp.mylib.NumeriCasuali;
-
 import java.util.*;
 
 public class TamaGolemMain {
