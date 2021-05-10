@@ -116,7 +116,6 @@ public class Equilibrio {
                     this.aggiungiIterazione(elementoForte, elementoDebole, potenzaIterazione);
                 }
             }
-
         }
 
     }

@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class TamaGolem {
-    private static final int MAX_VITA = 10;
+    private static final int MAX_VITA = 20;
 
     private String nome;
 
