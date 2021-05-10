@@ -2,7 +2,7 @@ import java.util.*;
 import it.unibs.fp.mylib.NumeriCasuali;
 
 public class Equilibrio {
-    HashMap<Elemento,Set<Iterazione>> elementi = new HashMap<>();
+    HashMap<Elemento, Set<Iterazione>> elementi = new HashMap<>();
     int numeroIterazioni = 0;
 
     public Equilibrio(List<Elemento> elementi, int vitaGolem) {
