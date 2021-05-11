@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class TamaGolem {
     private static final int MAX_VITA = 20;
@@ -10,6 +11,15 @@ public class TamaGolem {
     private ArrayList<Elemento> pietre = new ArrayList<>();
 
     private boolean isMorto;
+
+    public TamaGolem() {}
+
+    public TamaGolem(String nome) {
+        this.setVita(MAX_VITA);
+        this.setMorto(false);
+        this.setNome(nome);
+    }
+
 
     public TamaGolem(String nome, ArrayList<Elemento> pietre) {
         this.setVita(MAX_VITA);
@@ -73,4 +83,20 @@ public class TamaGolem {
 
         pietre.set(pietre.size() - 1, primaPietra);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if(o instanceof TamaGolem) {
+            if (this == o) return true;
+            TamaGolem t = (TamaGolem) o;
+            return (this.getNome().equals(t.getNome()));
+        }
+        return false;
+   }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nome, vita, pietre, isMorto);
+    }
+
 }

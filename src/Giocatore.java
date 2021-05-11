@@ -6,9 +6,14 @@ public class Giocatore {
 
     private ArrayList<TamaGolem> squadra = new ArrayList<>();
 
+    private TamaGolem tamaGolemInCampo;
+
+    public Giocatore() { }
+
     public Giocatore(String nome, ArrayList<TamaGolem> squadra) {
         this.nome = nome;
         this.squadra = squadra;
+        this.tamaGolemInCampo = squadra.get(0);
     }
 
     public String getNome() {
@@ -27,6 +32,14 @@ public class Giocatore {
         this.squadra = squadra;
     }
 
+    public TamaGolem getTamaGolemInCampo() {
+        return tamaGolemInCampo;
+    }
+
+    public void setTamaGolemInCampo(TamaGolem tamaGolemInCampo) {
+        this.tamaGolemInCampo = tamaGolemInCampo;
+    }
+
     public int getNumeroGolemVivi() {
         int numeroGolemVivi = 0;
         for (TamaGolem golem : squadra) {
@@ -35,5 +48,24 @@ public class Giocatore {
             }
         }
         return numeroGolemVivi;
+    }
+
+    public boolean scambiaGolemInCampo(String nomeTamaGolem) {
+        boolean trovato = false;
+        TamaGolem golemCercato = new TamaGolem();
+
+        for (TamaGolem golem : this.squadra) {
+            if(golem.getNome().equals(nomeTamaGolem)) {
+                trovato = true;
+                golemCercato = golem;
+            }
+        }
+
+        if(trovato && !golemCercato.isMorto()) {
+            this.setTamaGolemInCampo(golemCercato);
+            return true;
+        }
+
+        return false;
     }
 }

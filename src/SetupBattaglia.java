@@ -1,9 +1,6 @@
 import it.unibs.fp.mylib.InputDati;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class SetupBattaglia {
     //COSTANTI
@@ -75,6 +72,26 @@ public class SetupBattaglia {
         }
     }
 
+    private static Giocatore creazioneGiocatore(String numeroGiocatore) {
+        System.out.println(String.format("************ CONFIGURAZIONE %s GIOCATORE ************", numeroGiocatore));
+        String nomeGiocatore = InputDati.leggiStringa(String.format("Inserire il nome del %s giocatore: ", numeroGiocatore));
+        ArrayList<TamaGolem> squadraGiocatore = new ArrayList<>();
+        System.out.println("============== CREAZIONE SQUADRA ==============");
+        for (int i = 0; i < numeroTamaGolem; i++) {
+            String nomeGolem = InputDati.leggiStringa(String.format("Inserire il nome del %d golem: ", i + 1));
+            TamaGolem golem = new TamaGolem(nomeGolem);
+            squadraGiocatore.add(golem);
+        }
+        return new Giocatore(nomeGiocatore, squadraGiocatore);
+    }
+
+    private static void stampaGiocatore(Giocatore giocatore) {
+        System.out.printf("************ %s ************%n", giocatore.getNome());
+        System.out.println("============== SQUADRA ==============");
+        for (TamaGolem golem : giocatore.getSquadra()) {
+            System.out.println(String.format("%s => %d", golem.getNome(), golem.getVita()));
+        }
+    }
 
     public static void inizializzaBattaglia() {
         benvenuto();
@@ -99,23 +116,36 @@ public class SetupBattaglia {
 
         //Inserimento elementi
         Elemento[] elementi = generaElementi(numeroElementi);
-        Elemento[] scortaPietre = new Elemento[numeroPietreScorta];
+        HashMap<Elemento, Integer> scortaPietre = new HashMap<>();
         int pietreInserite = 0;
 
-        while (pietreInserite < numeroPietreScorta) {
-            for (int i = 0; i < numeroElementi; i++) {
-                for (int j = 0; j < numeroPietrePerElemento; j++) {
-                    scortaPietre[pietreInserite] = elementi[i];
-                    pietreInserite++;
-                }
-            }
+        for (int i = 0; i < numeroElementi; i++) {
+            scortaPietre.put(elementi[i], numeroPietrePerElemento);
         }
+
+        for (Elemento i : scortaPietre.keySet()) {
+            System.out.println("key: " + i.getNomeElemento() + " value: " + scortaPietre.get(i));
+        }
+
 
         //Genera equilibrio
         Equilibrio equilibrio = new Equilibrio(Arrays.asList(elementi), VITA_GOLEM);
 
-        //Stampa equilibrio
-        stampaEquilibrio(equilibrio);
+        //Creazione giocatori
+        Giocatore primoGiocatore = creazioneGiocatore("primo");
+        System.out.println("----------------------------------------");
+        Giocatore secondoGiocatore = creazioneGiocatore("secondo");
+
+        //Stampa giocatori
+        stampaGiocatore(primoGiocatore);
+        stampaGiocatore(secondoGiocatore);
+
+        Battaglia.variabiliDiConfigurazione(scortaPietre, numeroPietrePerGolem);
+        Battaglia.evocazione(primoGiocatore);
+
+        for (Elemento pietra : primoGiocatore.getTamaGolemInCampo().getPietre()) {
+            System.out.println(pietra.getNomeElemento());
+        }
     }
 
 }

@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Elemento {
     private String nomeElemento;
 
@@ -23,4 +25,8 @@ public class Elemento {
         return false;
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(nomeElemento);
+    }
 }
