@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class TamaGolem {
-    private static final int MAX_VITA = 20;
+    public static final int MAX_VITA = 20;
 
     private String nome;
 
@@ -77,7 +77,7 @@ public class TamaGolem {
     public void giraPietre() {
         Elemento primaPietra = pietre.get(0);
 
-        for(int i = 0; i < pietre.size(); i++) {
+        for(int i = 0; i < pietre.size() - 1; i++) {
             pietre.set(i, pietre.get(i + 1));
         }
 

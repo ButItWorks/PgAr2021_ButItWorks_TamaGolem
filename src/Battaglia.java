@@ -2,15 +2,132 @@ import it.unibs.fp.mylib.InputDati;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Battaglia {
 
-    public static HashMap<Elemento, Integer> pietreTotali = new HashMap<>();
+    private static HashMap<Elemento, Integer> pietreTotali = new HashMap<>();
     private static int pietrePerGolem;
+    private static Equilibrio equilibrio;
 
-    public static void variabiliDiConfigurazione(HashMap<Elemento, Integer> scortaPietre, int numeroPietrePerGolem) {
+    public static void variabiliDiConfigurazione(HashMap<Elemento, Integer> scortaPietre, int numeroPietrePerGolem, Equilibrio equilibrioBattaglia) {
         pietreTotali = scortaPietre;
         pietrePerGolem = numeroPietrePerGolem;
+        equilibrio = equilibrioBattaglia;
+    }
+
+    public static void scontro(Giocatore g1, Giocatore g2) {
+        System.out.println("****** INIZIO SCONTRO ******");
+        boolean isBattagliaTerminata = false;
+        Giocatore vincitore = new Giocatore();
+        while(!isBattagliaTerminata) {
+            if(!g1.getTamaGolemInCampo().isMorto() && !g2.getTamaGolemInCampo().isMorto()) {
+                evocazione(g1);
+                evocazione(g2);
+            }
+            else if(g1.getTamaGolemInCampo().isMorto()) {
+                if(g1.isSquadraEsausta()) {
+                    isBattagliaTerminata = true;
+                    vincitore = g2;
+                } else {
+                    System.out.println("****** GIOCATORE " + g1.getNome() + " ******");
+                    System.out.println("**** GOLEM " + g1.getTamaGolemInCampo().getNome() + " E' MORTO ****");
+                    TamaGolem golemDaEvocare = new TamaGolem();
+                    String nomeGolemDaEvocare = "";
+
+                    do {
+                        nomeGolemDaEvocare = InputDati.leggiStringa("Inserire il nome del golem da evocare: ");
+                        golemDaEvocare = new TamaGolem(nomeGolemDaEvocare);
+                        if(!g1.getSquadra().contains(golemDaEvocare)) {
+                            System.out.println("Non esiste un golem con questo nome...riprovare!");
+                        } else {
+                            for (TamaGolem golem : g1.getSquadra()) {
+                                if(golem.equals(golemDaEvocare)) {
+                                    golemDaEvocare = golem;
+                                }
+                            }
+                        }
+                    } while (!g1.getSquadra().contains(golemDaEvocare) || golemDaEvocare.isMorto());
+                    g1.setTamaGolemInCampo(golemDaEvocare);
+                    evocazione(g1);
+                }
+            }
+            else {
+                if(g2.getTamaGolemInCampo().isMorto()) {
+                    if(g1.isSquadraEsausta()) {
+                        isBattagliaTerminata = true;
+                        vincitore = g1;
+                    } else {
+                        System.out.println("****** GIOCATORE " + g2.getNome() + " ******");
+                        System.out.println("**** GOLEM " + g2.getTamaGolemInCampo().getNome() + " E' MORTO ****");
+                        TamaGolem golemDaEvocare = new TamaGolem();
+                        String nomeGolemDaEvocare = "";
+
+                        do {
+                            nomeGolemDaEvocare = InputDati.leggiStringa("Inserire il nome del golem da evocare: ");
+                            golemDaEvocare = new TamaGolem(nomeGolemDaEvocare);
+                            if (!g2.getSquadra().contains(golemDaEvocare)) {
+                                System.out.println("Non esiste un golem con questo nome...riprovare!");
+                            } else {
+                                for (TamaGolem golem : g2.getSquadra()) {
+                                    if (golem.equals(golemDaEvocare)) {
+                                        golemDaEvocare = golem;
+                                    }
+                                }
+                            }
+                        } while (!g2.getSquadra().contains(golemDaEvocare) || golemDaEvocare.isMorto());
+                        g2.setTamaGolemInCampo(golemDaEvocare);
+                        evocazione(g2);
+                    }
+                }
+            }
+
+            if(!isBattagliaTerminata) {
+                scontroTamagolem(g1.getTamaGolemInCampo(), g2.getTamaGolemInCampo());
+            }
+        }
+        System.out.println("Lo scontro e' terminato, ed il vincitore e'........................" + vincitore.getNome().toUpperCase());
+    }
+
+    private static int potenzaIterazione(Set<Iterazione> iterazioniElemento, Elemento elementoAvversario) {
+        for (Iterazione iterazione : iterazioniElemento) {
+            if(iterazione.getSecondoNodo().equals(elementoAvversario)) {
+                return iterazione.getPotenzaIterazione();
+            }
+        }
+        return 0;
+    }
+
+    public static void scontroTamagolem(TamaGolem primo, TamaGolem secondo) {
+        while(!primo.isMorto() && !secondo.isMorto()) {
+            Elemento pietraPrimo = primo.getPietraAttuale();
+            Elemento pietraSecondo = secondo.getPietraAttuale();
+            Set<Iterazione> iterazioniPrimoElemento = equilibrio.getIterazioniElemento(pietraPrimo);
+            Set<Iterazione> iterazioniSecondoElemento = equilibrio.getIterazioniElemento(pietraSecondo);
+
+            if(potenzaIterazione(iterazioniPrimoElemento, pietraSecondo) != 0) {
+                int potenzaIterazione = potenzaIterazione(iterazioniPrimoElemento, pietraSecondo);
+                secondo.infliggiDanno(potenzaIterazione);
+                if(secondo.isMorto()) {
+                    System.out.println(secondo.getNome() + " e' morto");
+                } else {
+                    System.out.println(pietraPrimo.getNomeElemento() + " vince sul " + pietraSecondo.getNomeElemento() + "  =>  " + primo.getNome() + " infligge " + potenzaIterazione + " a " + secondo.getNome());
+                    //InputDati.leggiStringa("Premere invio per continuare...");
+                }
+            } else {
+                int potenzaIterazione = potenzaIterazione(iterazioniSecondoElemento, pietraPrimo);
+                primo.infliggiDanno(potenzaIterazione);
+                if(primo.isMorto()) {
+                    System.out.println(primo.getNome() + " e' morto");
+                } else {
+                    System.out.println(pietraSecondo.getNomeElemento() + " vince sul " + pietraPrimo.getNomeElemento() + "  =>  " + secondo.getNome() + " infligge " + potenzaIterazione + " a " + primo.getNome());
+                    //InputDati.leggiStringa("Premere invio per continuare...");
+                }
+            }
+            primo.giraPietre();
+            secondo.giraPietre();
+        }
     }
 
     public static void stampaPietreTotali() {
@@ -43,6 +160,7 @@ public class Battaglia {
 
     public static void evocazione(Giocatore giocatore) {
         TamaGolem golemDaEvocare = giocatore.getTamaGolemInCampo();
+        System.out.println("********* " + golemDaEvocare.getNome() + " *********");
         ArrayList<Elemento> pietreGolem = new ArrayList<>();
         int pietreAssegnate = 0;
 

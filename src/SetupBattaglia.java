@@ -140,12 +140,8 @@ public class SetupBattaglia {
         stampaGiocatore(primoGiocatore);
         stampaGiocatore(secondoGiocatore);
 
-        Battaglia.variabiliDiConfigurazione(scortaPietre, numeroPietrePerGolem);
-        Battaglia.evocazione(primoGiocatore);
-
-        for (Elemento pietra : primoGiocatore.getTamaGolemInCampo().getPietre()) {
-            System.out.println(pietra.getNomeElemento());
-        }
+        Battaglia.variabiliDiConfigurazione(scortaPietre, numeroPietrePerGolem, equilibrio);
+        Battaglia.scontro(primoGiocatore, secondoGiocatore);
     }
 
 }

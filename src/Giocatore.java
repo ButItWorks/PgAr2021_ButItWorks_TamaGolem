@@ -68,4 +68,13 @@ public class Giocatore {
 
         return false;
     }
+
+    public boolean isSquadraEsausta() {
+        for (TamaGolem golem : this.getSquadra()) {
+            if(!golem.isMorto()) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
