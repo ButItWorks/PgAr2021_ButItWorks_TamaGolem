@@ -17,6 +17,11 @@ public class Battaglia {
         equilibrio = equilibrioBattaglia;
     }
 
+    /**
+     * metogo che gestisce tutto il match
+     * @param g1 giocatore 1 e relativa squadra
+     * @param g2 giocatore 1 e relativa squadra
+     */
     public static void scontro(Giocatore g1, Giocatore g2) {
         System.out.println("****** INIZIO SCONTRO ******");
         boolean isBattagliaTerminata = false;
@@ -90,6 +95,12 @@ public class Battaglia {
         System.out.println("Lo scontro e' terminato, ed il vincitore e'........................" + vincitore.getNome().toUpperCase());
     }
 
+    /**
+     * metodo per stabilire l'iterazione fra i due elementi e la loro potenza
+     * @param iterazioniElemento
+     * @param elementoAvversario
+     * @return
+     */
     private static int potenzaIterazione(Set<Iterazione> iterazioniElemento, Elemento elementoAvversario) {
         for (Iterazione iterazione : iterazioniElemento) {
             if(iterazione.getSecondoNodo().equals(elementoAvversario)) {
@@ -99,6 +110,11 @@ public class Battaglia {
         return 0;
     }
 
+    /**
+     * metodo che gestisce lo scontro
+     * @param primo TamaGolem
+     * @param secondo TamaGolem
+     */
     public static void scontroTamagolem(TamaGolem primo, TamaGolem secondo) {
         while(!primo.isMorto() && !secondo.isMorto()) {
             Elemento pietraPrimo = primo.getPietraAttuale();
@@ -130,6 +146,9 @@ public class Battaglia {
         }
     }
 
+    /**
+     * metodo per mostrare al giocatore le pietre nella riserva, che quindi può scegliere
+     */
     public static void stampaPietreTotali() {
         System.out.println("****** PIETRE NELLA SCORTA ******");
         int counter = 1;
@@ -140,6 +159,10 @@ public class Battaglia {
         System.out.println("********************************");
     }
 
+    /**
+     * metodo che permette al giocatore di scegliere le pietre da far mangiare al tamagolem
+     * @param pietreGolem
+     */
     private static void sceltaPietra(ArrayList<Elemento> pietreGolem)
     {
         String elementoPietra = "";
@@ -158,6 +181,10 @@ public class Battaglia {
         pietreGolem.add(pietra);
     }
 
+    /**
+     * metodo che gestisce l'evocazione del TamaGolem
+     * @param giocatore
+     */
     public static void evocazione(Giocatore giocatore) {
         TamaGolem golemDaEvocare = giocatore.getTamaGolemInCampo();
         System.out.println("********* " + golemDaEvocare.getNome() + " *********");
