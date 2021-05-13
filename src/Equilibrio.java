@@ -61,6 +61,11 @@ public class Equilibrio {
         return elementi.keySet();
     }
 
+    /**
+     * metodo che genera l'equilibrio secondo l'algoritmo che abbiamo pensato
+     * @param elementi
+     * @param vitaGolem
+     */
     private void creaEquilibrio(List<Elemento> elementi, int vitaGolem) {
         int numeroElementi = elementi.size();
         int[][] equilibrio = new int[numeroElementi][numeroElementi];
