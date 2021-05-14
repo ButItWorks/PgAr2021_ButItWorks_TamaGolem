@@ -38,13 +38,14 @@ public class SetupBattaglia {
     private static final String SECONDO = "Secondo";
     private static final String EQUILIBRIO = "----------------------------- EQUILIBRIO -----------------------------";
 
+
     //VARIABILI DI GIOCO
     private static int numeroElementi;
     private static int numeroTamaGolem;
     private static int numeroPietrePerGolem;
     private static int numeroPietreScorta;
     private static int numeroPietrePerElemento;
-
+    
     /**
      * stampa il benvenuto
      */
@@ -144,6 +145,17 @@ public class SetupBattaglia {
     }
 
     /**
+     * metodo che chiede all'utemnte se vuole fare un'altra partita
+     * @param par
+     */
+    private static void nuovaPartita(Boolean par){
+        String risposta = InputDati.leggiStringa("Vuoi fare una nuova partita? Digitare sì o no: ");
+        if (risposta.equalsIgnoreCase("sì")){
+            par = true;
+        }else par = false ;
+    }
+
+    /**
      * metodo che fa scegliere al giocatore la difficoltà dell'incontro e di conseguenza inizializza i valori di gioco
      * (Numero di TamaGolem, numero delle pietre che un TamaGolem può mangiare,
      * il numero di pietre nella riserva e il numero di pietre per ogni elemento)
@@ -151,7 +163,9 @@ public class SetupBattaglia {
      * attuale delle squadre. Insomma gestisce il gioco prima della battaglia.
      */
     public static void inizializzaBattaglia() {
-        benvenuto();
+        Boolean partita = true;
+        do{
+            benvenuto();
 
         //Scelta della difficolta'
         menuDifficolta();
@@ -206,7 +220,11 @@ public class SetupBattaglia {
 
         //Stampa dell' equilibrio
         stampaEquilibrio(equilibrio);
+
+        nuovaPartita(partita);
+        Utilities.clearScreen();
     }
+    while(partita==true);}
 
 }
 

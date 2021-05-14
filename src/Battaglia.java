@@ -1,6 +1,6 @@
 import it.unibs.fp.mylib.InputDati;
 import it.unibs.fp.mylib.Utilities;
-
+import it.unibs.fp.mylib.InputDati;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
@@ -11,7 +11,7 @@ public class Battaglia {
     private static final String MSG_INIZIO_SCONTRO = "************** INIZIO SCONTRO **************";
     private static final String MSG_STAMPA_PIETRA = "%d) %s => %s";
     private static final String MSG_GOLEM_MORTO = "il golem \"%s\" e' morto";
-    private static final String MSG_DANNI = "%s vince sul %s  => %s infligge %d a %s";
+    private static final String MSG_DANNI = "%s vince sul %s  => %s di %s infligge %d a %s di %s";
     private static final String SPAZ_LIST_GOL_RIM_GIOC = "****** LISTA GOLEM RIMANENTI GIOCATORE %s ******";
     private static final String SPAZ_PIETRE_SCORTA = "******* PIETRE NELLA SCORTA *******";
     private static final String SPAZ = "***********************************";
@@ -155,15 +155,14 @@ public class Battaglia {
                     }
                 }
             }
-
-
             Utilities.clearScreen();
 
             if(!isBattagliaTerminata) {
-                this.scontroTamaGolem(g1.getTamaGolemInCampo(), g2.getTamaGolemInCampo());
+                this.scontroTamaGolem(g1.getTamaGolemInCampo(), g2.getTamaGolemInCampo(),g1,g2);
             }
         }
         System.out.println(String.format(MSG_VINCITORE, vincitore.getNome().toUpperCase()));
+
     }
 
     /**
@@ -186,9 +185,11 @@ public class Battaglia {
      * @param golem1
      * @param golem2
      */
-    private void scontroTamaGolem(TamaGolem golem1, TamaGolem golem2) {
+    private void scontroTamaGolem(TamaGolem golem1, TamaGolem golem2, Giocatore g1, Giocatore g2) {
         String nomeGolem1 = golem1.getNome();
         String nomeGolem2 = golem2.getNome();
+        String giocatore1 = g1.getNome();
+        String giocatore2 = g2.getNome();
 
         while(!golem1.isMorto() && !golem2.isMorto()) {
             Elemento pietraGolem1 = golem1.getPietraAttuale();
@@ -208,7 +209,7 @@ public class Battaglia {
                     if(golem2.isMorto()) {
                         System.out.println(String.format(MSG_GOLEM_MORTO, golem2.getNome()));
                     } else {
-                        System.out.println(String.format(MSG_DANNI, elementoPietraGolem1, elementoPietraGolem2, nomeGolem1, potenzaIterazione, nomeGolem2));
+                        System.out.println(String.format(MSG_DANNI, elementoPietraGolem1, elementoPietraGolem2, nomeGolem1, giocatore1, potenzaIterazione, nomeGolem2, giocatore2));
                     }
                 }
                 else {
@@ -217,7 +218,7 @@ public class Battaglia {
                     if(golem1.isMorto()) {
                         System.out.println(String.format(MSG_GOLEM_MORTO, golem1.getNome()));
                     } else {
-                        System.out.println(String.format(MSG_DANNI, elementoPietraGolem2, elementoPietraGolem1, nomeGolem2, potenzaIterazione, nomeGolem1));
+                        System.out.println(String.format(MSG_DANNI, elementoPietraGolem2, elementoPietraGolem1, nomeGolem2, giocatore2, potenzaIterazione, nomeGolem1,giocatore1));
                     }
                 }
             }
@@ -291,4 +292,5 @@ public class Battaglia {
 
         golemDaEvocare.setPietre(pietreGolem);
     }
+
 }
