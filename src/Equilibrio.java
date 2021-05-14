@@ -61,6 +61,20 @@ public class Equilibrio {
         return elementi.keySet();
     }
 
+    /**
+     * Metodo che genera l'equilibrio secondo l'algoritmo che abbiamo pensato.
+     * Si riempie una matrice le cui righe e colonne rappresentano gli elementi
+     * (Esempio: riga e colonna 1 aria, riga e colonna 2 fuoco, riga e colonna 3 acqua etc.)
+     * e dove la diagonale  avrà come valori 0.
+     * I valori nella matrice saranno speculari e con segno opposto.
+     *
+     * Es: 0  1  -4  2  1
+     *    -1  0  -2  2  1
+     *    -4  2  0  -3 -3
+     *    -2 -2  3   0  1
+     *    -1 -1  3  -1  0
+     *
+     */
     private void creaEquilibrio(List<Elemento> elementi, int vitaGolem) {
         int numeroElementi = elementi.size();
         int[][] equilibrio = new int[numeroElementi][numeroElementi];
