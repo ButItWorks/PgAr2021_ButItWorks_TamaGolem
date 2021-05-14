@@ -68,6 +68,9 @@ public class TamaGolem {
         isMorto = morto;
     }
 
+    /**
+     * @return la prima pietra della lista (quella che verra lanciata)
+     */
     public Elemento getPietraAttuale() {
         return pietre.get(0);
     }
