@@ -38,6 +38,7 @@ public class SetupBattaglia {
         System.out.println("3) Difficile");
     }
 
+
     private static void menuDifficoltaSwitch(int difficolta) {
         switch (difficolta) {
             case 1:
@@ -57,6 +58,11 @@ public class SetupBattaglia {
         }
     }
 
+    /**
+     * metodo che genera gli elementi che verranno utilizzati nella partita
+     * @param numeroElementi indica il numero di elementi richiesti dal giocatore in base alla difficoltà
+     * @return tutti gli elementi che verranno usati (li mischia per non aver sempre gli stessi)
+     */
     private static Elemento[] generaElementi(int numeroElementi) {
         ArrayList<String> nomiMischiati = new ArrayList<>(Arrays.asList(NOMI_ELEMENTI));
         Collections.shuffle(nomiMischiati);
@@ -67,6 +73,11 @@ public class SetupBattaglia {
         return elementi;
     }
 
+    /**
+     * metodo che serve per mostrare l'Equilibrio del mondo restituendo le iterazioni tra gli elementi
+     * (verrà utilizzato alla fine della partita)
+     * @param equilibrio
+     */
     private static void stampaEquilibrio(Equilibrio equilibrio) {
         for (Elemento el : equilibrio.getTotaleElementi()) {
             System.out.println("**** " + el.getNomeElemento() + " ****");
@@ -76,6 +87,11 @@ public class SetupBattaglia {
         }
     }
 
+    /**
+     * metodo che serve a far creare un giocatore all'utente
+     * @param numeroGiocatore
+     * @return il giocatore creato con la squadra di Tamagolem
+     */
     private static Giocatore creazioneGiocatore(String numeroGiocatore) {
         System.out.println(String.format("************ CONFIGURAZIONE %s GIOCATORE ************", numeroGiocatore.toUpperCase()));
         String nomeGiocatore = InputDati.leggiStringa(String.format("Inserire il nome del %s giocatore: ", numeroGiocatore));
@@ -89,6 +105,10 @@ public class SetupBattaglia {
         return new Giocatore(nomeGiocatore, squadraGiocatore);
     }
 
+    /**
+     * metodo che stampa il giocatore e la sua squadra
+     * @param giocatore
+     */
     private static void stampaGiocatore(Giocatore giocatore) {
         System.out.printf("************ %s ************%n", giocatore.getNome());
         System.out.println("============== SQUADRA ==============");
@@ -97,6 +117,13 @@ public class SetupBattaglia {
         }
     }
 
+    /**
+     * metodo che fa scegliere al giocatore la difficoltà dell'incontro e di conseguenza inizializza i valori di gioco
+     * (Numero di TamaGolem, numero delle pietre che un TamaGolem può mangiare,
+     * il numero di pietre nella riserva e il numero di pietre per ogni elemento)
+     * secondo le formule assegnate, crea l'equilibrio del mondo, crea i giocatori,i TamaGolem e mostra la situazione
+     * attuale delle squadre. Insomma gestisce il gioco prima della battaglia.
+     */
     public static void inizializzaBattaglia() {
         benvenuto();
 
@@ -143,5 +170,4 @@ public class SetupBattaglia {
         Battaglia battaglia = new Battaglia(primoGiocatore, secondoGiocatore, scortaPietre, equilibrio, numeroPietrePerGolem);
         battaglia.scontro();
     }
-
 }
