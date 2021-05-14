@@ -23,7 +23,7 @@ public class SetupBattaglia {
     private static final String DIF_DIF = "3)  difficile";
     private static final String SPAZ_CONF_N_GIOCATORE = "************ CONFIGURAZIONE %s GIOCATORE ************";
     private static final String INS_NOME_GIOCATORE = "Inserire il nome del %s giocatore: ";
-    private static final String INS_NOME_GOLEM = "Inserire il nome del %d golem: ";
+    private static final String INS_NOME_GOLEM = "Inserire il nome del golem %d: ";
     private static final String SPAZ_CREAZ_SQUADRA = "============== CREAZIONE SQUADRA ==============";
     private static final String NOME_GIOCATORE = "************ %s ************%n";
     private static final String SPAZ_SQUADRA = "============== SQUADRA ==============";
@@ -36,6 +36,7 @@ public class SetupBattaglia {
     private static final String SCEL_NUM_EL_DIF = "Scegliere il numero di elementi esistenti( da 9 a 10 ): ";
     private static final String PRIMO = "Primo";
     private static final String SECONDO = "Secondo";
+    private static final String MSG_GIOCATORE_ESISTENTE = "Esiste gia' un giocatore con questo nome....riprovare!";
     private static final String EQUILIBRIO = "----------------------------- EQUILIBRIO -----------------------------";
 
 
@@ -45,15 +46,6 @@ public class SetupBattaglia {
     private static int numeroPietrePerGolem;
     private static int numeroPietreScorta;
     private static int numeroPietrePerElemento;
-    
-    /**
-     * stampa il benvenuto
-     */
-    private static void benvenuto() {
-        System.out.println("+------------------------------------------------+");
-        System.out.println("|             BENVENUTO IN TAMAGOLEM             |");
-        System.out.println("+------------------------------------------------+");
-    }
 
     /**
      * stampa il menu della difficoltà
@@ -145,17 +137,6 @@ public class SetupBattaglia {
     }
 
     /**
-     * metodo che chiede all'utemnte se vuole fare un'altra partita
-     * @param par
-     */
-    private static void nuovaPartita(Boolean par){
-        String risposta = InputDati.leggiStringa("Vuoi fare una nuova partita? Digitare sì o no: ");
-        if (risposta.equalsIgnoreCase("sì")){
-            par = true;
-        }else par = false ;
-    }
-
-    /**
      * metodo che fa scegliere al giocatore la difficoltà dell'incontro e di conseguenza inizializza i valori di gioco
      * (Numero di TamaGolem, numero delle pietre che un TamaGolem può mangiare,
      * il numero di pietre nella riserva e il numero di pietre per ogni elemento)
@@ -163,10 +144,6 @@ public class SetupBattaglia {
      * attuale delle squadre. Insomma gestisce il gioco prima della battaglia.
      */
     public static void inizializzaBattaglia() {
-        Boolean partita = true;
-        do{
-            benvenuto();
-
         //Scelta della difficolta'
         menuDifficolta();
         int choice = InputDati.leggiIntero(SCELTA, MIN_CHOICE_VALUE, MAX_CHOICE_VALUE);
@@ -201,7 +178,7 @@ public class SetupBattaglia {
             secondoGiocatore = creazioneGiocatore(SECONDO);
             isNomeUguale = secondoGiocatore.getNome().equalsIgnoreCase(primoGiocatore.getNome());
             if (isNomeUguale) {
-                System.out.println("Esiste gia' un giocatore con questo nome....riprovare!");
+                System.out.println(MSG_GIOCATORE_ESISTENTE);
                 Utilities.clearScreenStop();
             }
         } while(isNomeUguale);
@@ -220,11 +197,7 @@ public class SetupBattaglia {
 
         //Stampa dell' equilibrio
         stampaEquilibrio(equilibrio);
-
-        nuovaPartita(partita);
-        Utilities.clearScreen();
+        Utilities.clearScreenStop();
     }
-    while(partita==true);}
-
 }
 
