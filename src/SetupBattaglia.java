@@ -16,6 +16,25 @@ public class SetupBattaglia {
     private static final int MAX_N_VALUE_DIFFICILE = 10;
     private static final String[] NOMI_ELEMENTI = { "Nikita", "Robb", "TetoFonta", "Enrico", "Massimiliano", "Lange", "Ilaria", "Jacopo", "Saetti", "Serina" };
     private static final int VITA_GOLEM = 20;
+    private static final String SEL_DIF = "Difficolta' di gioco: ";
+    private static final String DIF_FAC = "1)  facile";
+    private static final String DIF_MED = "2)  intermedio";
+    private static final String DIF_DIF = "3)  difficile";
+    private static final String SPAZ_CONF_N_GIOCATORE = "\"************ CONFIGURAZIONE %s GIOCATORE ************\"";
+    private static final String INS_NOME_GIOCATORE = "Inserire il nome del %s giocatore: ";
+    private static final String INS_NOME_GOLEM = "Inserire il nome del %d golem: ";
+    private static final String SPAZ_CREAZ_SQUADRA = "============== CREAZIONE SQUADRA ==============";
+    private static final String NOME_GIOCATORE = "\"************ %s ************%n\"";
+    private static final String SPAZ_SQUADRA = "============== SQUADRA ==============";
+    private static final String SCELTA = "Si prega di effettuare una scelta: ";
+    private static final String DIF_SCEL_FAC = "************ DIFFICOLTA SCELTA: FACILE ************";
+    private static final String DIF_SCEL_MED = "************ DIFFICOLTA SCELTA: MEDIA ************";
+    private static final String DIF_SCEL_DIF = "************ DIFFICOLTA SCELTA: DIFFICILE ************";
+    private static final String SCEL_NUM_EL_FAC = "Scegliere il numero di elementi esistenti( da 3 a 5 ): ";
+    private static final String SCEL_NUM_EL_MED = "Scegliere il numero di elementi esistenti( da 6 a 8 ): ";
+    private static final String SCEL_NUM_EL_DIF = "Scegliere il numero di elementi esistenti( da 9 a 10 ): ";
+    private static final String PRIMO = "Primo";
+    private static final String SECONDO = "Secondo";
 
     //VARIABILI DI GIOCO
     private static int numeroElementi;
@@ -32,26 +51,24 @@ public class SetupBattaglia {
 
     private static void menuDifficolta()
     {
-        System.out.println("Difficolta' di gioco:");
-        System.out.println("1) Facile");
-        System.out.println("2) Intermedio");
-        System.out.println("3) Difficile");
+        System.out.println(SEL_DIF);
+        System.out.println(DIF_FAC);
+        System.out.println(DIF_MED);
+        System.out.println(DIF_DIF);
     }
-
-
     private static void menuDifficoltaSwitch(int difficolta) {
         switch (difficolta) {
             case 1:
-                System.out.println("************ DIFFICOLTA SCELTA: FACILE ************");
-                numeroElementi = InputDati.leggiIntero("Scegliere il numero di elementi esistenti( da 3 a 5 ): ", MIN_N_VALUE_FACILE, MAX_N_VALUE_FACILE);
+                System.out.println(DIF_SCEL_FAC);
+                numeroElementi = InputDati.leggiIntero(SCEL_NUM_EL_FAC, MIN_N_VALUE_FACILE, MAX_N_VALUE_FACILE);
                 break;
             case 2:
-                System.out.println("************ DIFFICOLTA SCELTA: MEDIA ************");
-                numeroElementi = InputDati.leggiIntero("Scegliere il numero di elementi esistenti( da 6 a 8 ): ", MIN_N_VALUE_MEDIA, MAX_N_VALUE_MEDIA);
+                System.out.println(DIF_SCEL_MED);
+                numeroElementi = InputDati.leggiIntero(SCEL_NUM_EL_MED, MIN_N_VALUE_MEDIA, MAX_N_VALUE_MEDIA);
                 break;
             case 3:
-                System.out.println("************ DIFFICOLTA SCELTA: DIFFICILE ************");
-                numeroElementi = InputDati.leggiIntero("Scegliere il numero di elementi esistenti( da 9 a 10 ): ", MIN_N_VALUE_DIFFICILE, MAX_N_VALUE_DIFFICILE);
+                System.out.println(DIF_SCEL_DIF);
+                numeroElementi = InputDati.leggiIntero(SCEL_NUM_EL_DIF, MIN_N_VALUE_DIFFICILE, MAX_N_VALUE_DIFFICILE);
                 break;
             default:
                 break;
@@ -75,7 +92,7 @@ public class SetupBattaglia {
 
     /**
      * metodo che serve per mostrare l'Equilibrio del mondo restituendo le iterazioni tra gli elementi
-     * (verrà utilizzato alla fine della partita)
+     * (verrà utilizzato alla fine della partita
      * @param equilibrio
      */
     private static void stampaEquilibrio(Equilibrio equilibrio) {
@@ -93,12 +110,12 @@ public class SetupBattaglia {
      * @return il giocatore creato con la squadra di Tamagolem
      */
     private static Giocatore creazioneGiocatore(String numeroGiocatore) {
-        System.out.println(String.format("************ CONFIGURAZIONE %s GIOCATORE ************", numeroGiocatore.toUpperCase()));
-        String nomeGiocatore = InputDati.leggiStringa(String.format("Inserire il nome del %s giocatore: ", numeroGiocatore));
+        System.out.println(String.format(SPAZ_CONF_N_GIOCATORE, numeroGiocatore.toUpperCase()));
+        String nomeGiocatore = InputDati.leggiStringa(String.format(INS_NOME_GIOCATORE, numeroGiocatore));
         ArrayList<TamaGolem> squadraGiocatore = new ArrayList<>();
-        System.out.println("============== CREAZIONE SQUADRA ==============");
+        System.out.println(SPAZ_CREAZ_SQUADRA);
         for (int i = 0; i < numeroTamaGolem; i++) {
-            String nomeGolem = InputDati.leggiStringa(String.format("Inserire il nome del %d golem: ", i + 1));
+            String nomeGolem = InputDati.leggiStringa(String.format(INS_NOME_GOLEM, i + 1));
             TamaGolem golem = new TamaGolem(nomeGolem);
             squadraGiocatore.add(golem);
         }
@@ -110,8 +127,8 @@ public class SetupBattaglia {
      * @param giocatore
      */
     private static void stampaGiocatore(Giocatore giocatore) {
-        System.out.printf("************ %s ************%n", giocatore.getNome());
-        System.out.println("============== SQUADRA ==============");
+        System.out.printf(NOME_GIOCATORE, giocatore.getNome());
+        System.out.println(SPAZ_SQUADRA);
         for (TamaGolem golem : giocatore.getSquadra()) {
             System.out.println(String.format("%s => %d", golem.getNome(), golem.getVita()));
         }
@@ -129,7 +146,7 @@ public class SetupBattaglia {
 
         //Scelta della difficolta'
         menuDifficolta();
-        int choice = InputDati.leggiIntero("Si prega di effettuare una scelta: ", MIN_CHOICE_VALUE, MAX_CHOICE_VALUE);
+        int choice = InputDati.leggiIntero(SCELTA, MIN_CHOICE_VALUE, MAX_CHOICE_VALUE);
         menuDifficoltaSwitch(choice);
 
         //Pulire console
@@ -145,24 +162,21 @@ public class SetupBattaglia {
         Elemento[] elementi = generaElementi(numeroElementi);
         HashMap<Elemento, Integer> scortaPietre = new HashMap<>();
         int pietreInserite = 0;
-
         for (int i = 0; i < numeroElementi; i++) {
             scortaPietre.put(elementi[i], numeroPietrePerElemento);
         }
-
         //Genera equilibrio
         Equilibrio equilibrio = new Equilibrio(Arrays.asList(elementi), VITA_GOLEM);
 
         //Creazione giocatori
-        Giocatore primoGiocatore = creazioneGiocatore("primo");
+        Giocatore primoGiocatore = creazioneGiocatore(PRIMO);
         Utilities.clearScreen();
-        Giocatore secondoGiocatore = creazioneGiocatore("secondo");
+        Giocatore secondoGiocatore = creazioneGiocatore(SECONDO);
         Utilities.clearScreen();
 
         //Stampa giocatori
         stampaGiocatore(primoGiocatore);
         stampaGiocatore(secondoGiocatore);
-
         //Pulire console
         Utilities.clearScreen();
 
@@ -170,4 +184,6 @@ public class SetupBattaglia {
         Battaglia battaglia = new Battaglia(primoGiocatore, secondoGiocatore, scortaPietre, equilibrio, numeroPietrePerGolem);
         battaglia.scontro();
     }
+
 }
+
