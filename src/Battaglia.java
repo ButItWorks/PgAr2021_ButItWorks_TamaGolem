@@ -12,6 +12,18 @@ public class Battaglia {
     private static final String MSG_STAMPA_PIETRA = "%d) %s => %s";
     private static final String MSG_GOLEM_MORTO = "il golem \"%s\" e' morto";
     private static final String MSG_DANNI = "%s vince sul %s  => %s infligge %d a %s";
+    private static final String SPAZ_LIST_GOL_RIM_GIOC = "****** LISTA GOLEM RIMANENTI GIOCATORE %s ******";
+    private static final String SPAZ = "***********************************";
+    private static final String SPAZ_SOST_GOL_GIOC = "******** SOSTITUZIONE GOLEM GIOCATORE %s *******";
+    /*private static final String MSG_INIZIO_SCONTRO = "";
+    private static final String MSG_INIZIO_SCONTRO = "";
+    private static final String MSG_INIZIO_SCONTRO = "";
+    private static final String MSG_INIZIO_SCONTRO = "";
+    private static final String MSG_INIZIO_SCONTRO = "";
+    private static final String MSG_INIZIO_SCONTRO = "";
+    private static final String MSG_INIZIO_SCONTRO = "";
+    private static final String MSG_INIZIO_SCONTRO = "";
+    private static final String MSG_INIZIO_SCONTRO = "";*/
 
     //ATTRIBUTI
     private Giocatore g1;
@@ -26,13 +38,13 @@ public class Battaglia {
      */
     private void stampaGolemRimanenti(Giocatore giocatore)
     {
-        System.out.println(String.format("****** LISTA GOLEM RIMANENTI GIOCATORE %s ******", giocatore.getNome()));
+        System.out.println(String.format(SPAZ_LIST_GOL_RIM_GIOC, giocatore.getNome()));
         for (TamaGolem golem : giocatore.getSquadra()) {
             if(!golem.isMorto()) {
                 System.out.println("=> " + golem.getNome());
             }
         }
-        System.out.println("***********************************");
+        System.out.println(SPAZ);
     }
 
     public Battaglia(Giocatore g1, Giocatore g2, HashMap<Elemento, Integer> scortaPietre, Equilibrio equilibrioBattaglia, int pietrePerGolem) {
@@ -45,7 +57,6 @@ public class Battaglia {
 
     /**
      * metogo che gestisce tutto il match
-
      */
     public void scontro() {
         boolean isBattagliaTerminata = false;

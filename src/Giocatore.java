@@ -2,44 +2,43 @@ import java.util.ArrayList;
 
 public class Giocatore {
 
+    //attributi
     private String nome;
-
     private ArrayList<TamaGolem> squadra = new ArrayList<>();
-
     private TamaGolem tamaGolemInCampo;
 
+    //costruttori
     public Giocatore() { }
-
     public Giocatore(String nome, ArrayList<TamaGolem> squadra) {
         this.nome = nome;
         this.squadra = squadra;
         this.tamaGolemInCampo = squadra.get(0);
     }
 
+    //getters & setters
     public String getNome() {
         return nome;
     }
-
     public void setNome(String nome) {
         this.nome = nome;
     }
-
     public ArrayList<TamaGolem> getSquadra() {
         return squadra;
     }
-
     public void setSquadra(ArrayList<TamaGolem> squadra) {
         this.squadra = squadra;
     }
-
     public TamaGolem getTamaGolemInCampo() {
         return tamaGolemInCampo;
     }
-
     public void setTamaGolemInCampo(TamaGolem tamaGolemInCampo) {
         this.tamaGolemInCampo = tamaGolemInCampo;
     }
 
+    /**
+     * metodo che controlla quanti TamaGolem sono vivi
+     * @return il numero di TamaGolem vivi
+     */
     public int getNumeroGolemVivi() {
         int numeroGolemVivi = 0;
         for (TamaGolem golem : squadra) {
@@ -69,8 +68,8 @@ public class Giocatore {
 
         return false;
     }
+
     /**
-     *
      * @return true se la squadra è esausta
      */
     public boolean isSquadraEsausta() {

@@ -1,16 +1,18 @@
 import java.util.Objects;
 
 public class Elemento {
+
     private String nomeElemento;
 
+    //costruttore
     public Elemento(String nomeElemento) {
         this.setNomeElemento(nomeElemento);
     }
 
+    //getter & setter
     public String getNomeElemento() {
         return this.nomeElemento;
     }
-
     public void setNomeElemento(String nomeElemento) {
         this.nomeElemento = nomeElemento;
     }

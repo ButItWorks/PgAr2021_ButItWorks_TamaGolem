@@ -33,7 +33,6 @@ public class Equilibrio {
      * @param potenzaIterazione potenza iterazione
      * @return vero se l'iterazione e' stato aggiunto false altrimenti
      */
-
     public boolean aggiungiIterazione(Elemento elementoForte, Elemento elementoDebole, int potenzaIterazione) {
         if (!elementi.containsKey(elementoForte))
             this.aggiungiElemento(elementoForte);
@@ -73,6 +72,17 @@ public class Equilibrio {
      *    -4  2  0  -3 -3
      *    -2 -2  3   0  1
      *    -1 -1  3  -1  0
+     * (è la matrice del grafo che avevate dato voi)
+     *
+     * I numeri vengono generati in modo casuale in un intervallo definito e sono sempre diversi da 0.
+     * La somma di ogni riga e di ogni colonna è uguale a 0.
+     * Nella penultima colonna c'è un controllo che controlla che la  somma di tutti gli elementi precedenti
+     * nella riga  sia diversa da 0 e nel caso in cui sia uguale a 0 ricalcola l'ultimo numero nella riga
+     * (quello nella colonna n-1).
+     * I numeri nell'ultima colonna sono assegnati in modo che la somma della riga sia uguale a 0.
+     * Un altro controllo viene svolto nella posizione della terzultima riga e penultima colonna
+     * e controlla che la somma della colonna sia diversa da 0. Nel caso in cui fosse uguale a 0
+     * viene ricalcolato l'ultimo numero scelto.
      *
      */
     private void creaEquilibrio(List<Elemento> elementi, int vitaGolem) {

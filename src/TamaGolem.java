@@ -2,25 +2,21 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class TamaGolem {
+
+    //attributi
     public static final int MAX_VITA = 20;
-
     private String nome;
-
     private int vita;
-
     private ArrayList<Elemento> pietre = new ArrayList<>();
-
     private boolean isMorto;
 
+    //costruttori
     public TamaGolem() {}
-
     public TamaGolem(String nome) {
         this.setVita(MAX_VITA);
         this.setMorto(false);
         this.setNome(nome);
     }
-
-
     public TamaGolem(String nome, ArrayList<Elemento> pietre) {
         this.setVita(MAX_VITA);
         this.setMorto(false);
@@ -28,18 +24,16 @@ public class TamaGolem {
         this.setPietre(pietre);
     }
 
+  //getters and setters
     public String getNome() {
         return nome;
     }
-
     public void setNome(String nome) {
         this.nome = nome;
     }
-
     public int getVita() {
         return vita;
     }
-
     public void setVita(int vita) {
         if(vita <= 0) {
             this.vita = 0;
@@ -48,22 +42,15 @@ public class TamaGolem {
             this.vita = vita;
         }
     }
-
     public ArrayList<Elemento> getPietre() {
         return pietre;
     }
-
     public void setPietre(ArrayList<Elemento> pietre) {
         this.pietre = pietre;
     }
-
-    /**
-     * @return true se il golem è morto
-     */
     public boolean isMorto() {
         return isMorto;
     }
-
     public void setMorto(boolean morto) {
         isMorto = morto;
     }
@@ -75,6 +62,11 @@ public class TamaGolem {
         return pietre.get(0);
     }
 
+    /**
+     * metodo che calcola il danno
+     * @param danno
+     * @return la vita dopo il calcolo dei danni
+     */
     public int infliggiDanno(int danno) {
         this.setVita(this.vita - danno);
         return this.vita;

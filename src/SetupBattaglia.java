@@ -5,6 +5,7 @@ import it.unibs.fp.mylib.Utilities;
 import java.util.*;
 
 public class SetupBattaglia {
+
     //COSTANTI
     private static final int MIN_CHOICE_VALUE = 1;
     private static final int MAX_CHOICE_VALUE = 3;
@@ -43,12 +44,18 @@ public class SetupBattaglia {
     private static int numeroPietreScorta;
     private static int numeroPietrePerElemento;
 
+    /**
+     * stampa il benvenuto
+     */
     private static void benvenuto() {
         System.out.println("+------------------------------------------------+");
         System.out.println("|             BENVENUTO IN TAMAGOLEM             |");
         System.out.println("+------------------------------------------------+");
     }
 
+    /**
+     * stampa il menu della difficoltà
+     */
     private static void menuDifficolta()
     {
         System.out.println(SEL_DIF);
@@ -56,6 +63,8 @@ public class SetupBattaglia {
         System.out.println(DIF_MED);
         System.out.println(DIF_DIF);
     }
+
+
     private static void menuDifficoltaSwitch(int difficolta) {
         switch (difficolta) {
             case 1:
