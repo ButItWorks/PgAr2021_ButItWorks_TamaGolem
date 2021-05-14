@@ -1,4 +1,8 @@
+package it.butitworks.model;
+
 import java.util.*;
+
+import it.butitworks.model.Elemento;
 import it.unibs.fp.mylib.NumeriCasuali;
 
 public class Equilibrio {
@@ -29,8 +33,8 @@ public class Equilibrio {
      * aggiunge un arco tra i nodi x e y se tale arco non e' gia' presente e restituisce true,
      * altrimenti non modifica il grafo e restituisce false.
      *
-     * @param elementoForte primo Elemento dell'iterazione
-     * @param elementoDebole secondo Elemento dell'iterazione
+     * @param elementoForte primo it.butitworks.model.Elemento dell'iterazione
+     * @param elementoDebole secondo it.butitworks.model.Elemento dell'iterazione
      * @param potenzaIterazione potenza iterazione
      * @return vero se l'iterazione e' stato aggiunto false altrimenti
      */

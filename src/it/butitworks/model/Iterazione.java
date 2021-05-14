@@ -1,3 +1,5 @@
+package it.butitworks.model;
+
 import java.util.Objects;
 
 public class Iterazione {

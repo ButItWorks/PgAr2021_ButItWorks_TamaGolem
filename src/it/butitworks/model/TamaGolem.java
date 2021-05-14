@@ -1,3 +1,5 @@
+package it.butitworks.model;
+
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -73,7 +75,7 @@ public class TamaGolem {
     }
 
     /**
-     * metodo che fa girare le pietre (ma va?) come girano nell'apparato digerente del TamaGolem
+     * metodo che fa girare le pietre (ma va?) come girano nell'apparato digerente del it.butitworks.model.TamaGolem
      * e permette di stabilire la prossima pietra che verra lanciata
      */
     public void giraPietre() {

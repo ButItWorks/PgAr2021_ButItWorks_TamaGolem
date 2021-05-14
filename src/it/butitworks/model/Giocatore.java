@@ -1,3 +1,5 @@
+package it.butitworks.model;
+
 import java.util.ArrayList;
 
 public class Giocatore {
@@ -36,8 +38,8 @@ public class Giocatore {
     }
 
     /**
-     * metodo che controlla quanti TamaGolem sono vivi
-     * @return il numero di TamaGolem vivi
+     * metodo che controlla quanti it.butitworks.model.TamaGolem sono vivi
+     * @return il numero di it.butitworks.model.TamaGolem vivi
      */
     public int getNumeroGolemVivi() {
         int numeroGolemVivi = 0;

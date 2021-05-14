@@ -1,6 +1,7 @@
+import it.butitworks.model.*;
 import it.unibs.fp.mylib.InputDati;
 import it.unibs.fp.mylib.Utilities;
-import it.unibs.fp.mylib.InputDati;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
@@ -275,7 +276,7 @@ public class Battaglia {
     }
 
     /**
-     * metodo che gestisce l'evocazione del TamaGolem
+     * metodo che gestisce l'evocazione del it.butitworks.model.TamaGolem
      * @param giocatore
      * @param golemDaEvocare
      */

@@ -1,5 +1,5 @@
+import it.butitworks.model.*;
 import it.unibs.fp.mylib.InputDati;
-import it.unibs.fp.mylib.MyMenu;
 import it.unibs.fp.mylib.Utilities;
 
 import java.util.*;
@@ -92,7 +92,7 @@ public class SetupBattaglia {
     }
 
     /**
-     * metodo che serve per mostrare l'Equilibrio del mondo restituendo le iterazioni tra gli elementi
+     * metodo che serve per mostrare l'it.butitworks.model.Equilibrio del mondo restituendo le iterazioni tra gli elementi
      * (verrà utilizzato alla fine della partita
      * @param equilibrio
      */
@@ -138,9 +138,9 @@ public class SetupBattaglia {
 
     /**
      * metodo che fa scegliere al giocatore la difficoltà dell'incontro e di conseguenza inizializza i valori di gioco
-     * (Numero di TamaGolem, numero delle pietre che un TamaGolem può mangiare,
+     * (Numero di it.butitworks.model.TamaGolem, numero delle pietre che un it.butitworks.model.TamaGolem può mangiare,
      * il numero di pietre nella riserva e il numero di pietre per ogni elemento)
-     * secondo le formule assegnate, crea l'equilibrio del mondo, crea i giocatori,i TamaGolem e mostra la situazione
+     * secondo le formule assegnate, crea l'equilibrio del mondo, crea i giocatori,i it.butitworks.model.TamaGolem e mostra la situazione
      * attuale delle squadre. Insomma gestisce il gioco prima della battaglia.
      */
     public static void inizializzaBattaglia() {
