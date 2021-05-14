@@ -1,6 +1,4 @@
 import it.unibs.fp.mylib.InputDati;
-import it.unibs.fp.mylib.MyMenu;
-import it.unibs.fp.mylib.Utilities;
 
 import java.util.*;
 
@@ -39,6 +37,7 @@ public class SetupBattaglia {
 
 
     //VARIABILI DI GIOCO
+    private static int difficolta;
     private static int numeroElementi;
     private static int numeroTamaGolem;
     private static int numeroPietrePerGolem;
@@ -53,32 +52,22 @@ public class SetupBattaglia {
 
     private static void menuDifficolta()
     {
-<<<<<<< HEAD
         System.out.println(SEL_DIF);
         System.out.println(DIF_FAC);
         System.out.println(DIF_MED);
         System.out.println(DIF_DIF);
-=======
-        System.out.println("Difficolta' di gioco:");
-        System.out.println("1) Facile");
-        System.out.println("2) Intermedio");
-        System.out.println("3) Difficile");
->>>>>>> alessandro-branch
     }
 
-    private static void menuDifficoltaSwitch(int difficolta) {
-        switch (difficolta) {
+    private static void menuSwitch(int choice) {
+        switch (choice) {
             case 1:
-                System.out.println("************ DIFFICOLTA SCELTA: FACILE ************");
-                numeroElementi = InputDati.leggiIntero("Scegliere il numero di elementi esistenti( da 3 a 5 ): ", MIN_N_VALUE_FACILE, MAX_N_VALUE_FACILE);
+                difficolta = 1;
                 break;
             case 2:
-                System.out.println("************ DIFFICOLTA SCELTA: MEDIA ************");
-                numeroElementi = InputDati.leggiIntero("Scegliere il numero di elementi esistenti( da 6 a 8 ): ", MIN_N_VALUE_MEDIA, MAX_N_VALUE_MEDIA);
+                difficolta = 2;
                 break;
             case 3:
-                System.out.println("************ DIFFICOLTA SCELTA: DIFFICILE ************");
-                numeroElementi = InputDati.leggiIntero("Scegliere il numero di elementi esistenti( da 9 a 10 ): ", MIN_N_VALUE_DIFFICILE, MAX_N_VALUE_DIFFICILE);
+                difficolta = 3;
                 break;
             default:
                 break;
@@ -120,13 +109,8 @@ public class SetupBattaglia {
      * @return il giocatore creato con la squadra di Tamagolem
      */
     private static Giocatore creazioneGiocatore(String numeroGiocatore) {
-<<<<<<< HEAD
         System.out.println(String.format(CONF_N_GIOCATORE, numeroGiocatore));
         String nomeGiocatore = InputDati.leggiStringa(String.format(INS_NOME_GIOCATORE, numeroGiocatore));
-=======
-        System.out.println(String.format("************ CONFIGURAZIONE %s GIOCATORE ************", numeroGiocatore.toUpperCase()));
-        String nomeGiocatore = InputDati.leggiStringa(String.format("Inserire il nome del %s giocatore: ", numeroGiocatore));
->>>>>>> alessandro-branch
         ArrayList<TamaGolem> squadraGiocatore = new ArrayList<>();
         System.out.println(CREAZ_SQUADRA);
         for (int i = 0; i < numeroTamaGolem; i++) {
@@ -158,10 +142,7 @@ public class SetupBattaglia {
      */
     public static void inizializzaBattaglia() {
         benvenuto();
-
-        //Scelta della difficolta'
         menuDifficolta();
-<<<<<<< HEAD
         int choice = InputDati.leggiIntero(SCELTA, MIN_CHOICE_VALUE, MAX_CHOICE_VALUE);
         menuSwitch(choice);
         if(difficolta == 1) {
@@ -174,13 +155,6 @@ public class SetupBattaglia {
             System.out.println(DIF_SCEL_DIF);
             numeroElementi = InputDati.leggiIntero(SCEL_NUM_EL_DIF, MIN_N_VALUE_DIFFICILE, MAX_N_VALUE_DIFFICILE);
         }
-=======
-        int choice = InputDati.leggiIntero("Si prega di effettuare una scelta: ", MIN_CHOICE_VALUE, MAX_CHOICE_VALUE);
-        menuDifficoltaSwitch(choice);
-
-        //Pulire console
-        Utilities.clearScreen();
->>>>>>> alessandro-branch
 
         //Inizializzazione variabili
         numeroPietrePerGolem = (int) Math.ceil( (double) (numeroElementi + 1) / 3) + 1;
@@ -188,7 +162,7 @@ public class SetupBattaglia {
         numeroPietreScorta = (int) Math.ceil((double) (2 * numeroTamaGolem * numeroPietrePerGolem) / numeroElementi) * numeroElementi;
         numeroPietrePerElemento = (int) Math.ceil((double) (2 * numeroTamaGolem * numeroPietrePerGolem) / numeroElementi);
 
-        //Inserimento pietre nella scorta
+        //Inserimento elementi
         Elemento[] elementi = generaElementi(numeroElementi);
         HashMap<Elemento, Integer> scortaPietre = new HashMap<>();
         int pietreInserite = 0;
@@ -197,39 +171,25 @@ public class SetupBattaglia {
             scortaPietre.put(elementi[i], numeroPietrePerElemento);
         }
 
-<<<<<<< HEAD
         for (Elemento i : scortaPietre.keySet()) {
             System.out.println(KEY + i.getNomeElemento() + VALUE + scortaPietre.get(i));
         }
 
 
-=======
->>>>>>> alessandro-branch
         //Genera equilibrio
         Equilibrio equilibrio = new Equilibrio(Arrays.asList(elementi), VITA_GOLEM);
 
         //Creazione giocatori
-<<<<<<< HEAD
         Giocatore primoGiocatore = creazioneGiocatore(PRIMO);
         System.out.println("----------------------------------------");
         Giocatore secondoGiocatore = creazioneGiocatore(SECONDO);
-=======
-        Giocatore primoGiocatore = creazioneGiocatore("primo");
-        Utilities.clearScreen();
-        Giocatore secondoGiocatore = creazioneGiocatore("secondo");
-        Utilities.clearScreen();
->>>>>>> alessandro-branch
 
         //Stampa giocatori
         stampaGiocatore(primoGiocatore);
         stampaGiocatore(secondoGiocatore);
 
-        //Pulire console
-        Utilities.clearScreen();
-
-        //Realizzazione della battaglia
-        Battaglia battaglia = new Battaglia(primoGiocatore, secondoGiocatore, scortaPietre, equilibrio, numeroPietrePerGolem);
-        battaglia.scontro();
+        Battaglia.variabiliDiConfigurazione(scortaPietre, numeroPietrePerGolem, equilibrio);
+        Battaglia.scontro(primoGiocatore, secondoGiocatore);
     }
 
 }
