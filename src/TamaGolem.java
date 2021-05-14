@@ -57,9 +57,6 @@ public class TamaGolem {
         this.pietre = pietre;
     }
 
-    /**
-     * @return true se il golem è morto
-     */
     public boolean isMorto() {
         return isMorto;
     }
@@ -68,9 +65,6 @@ public class TamaGolem {
         isMorto = morto;
     }
 
-    /**
-     * @return la prima pietra della lista (quella che verra lanciata)
-     */
     public Elemento getPietraAttuale() {
         return pietre.get(0);
     }
@@ -80,10 +74,6 @@ public class TamaGolem {
         return this.vita;
     }
 
-    /**
-     * metodo che fa girare le pietre (ma va?) come girano nell'apparato digerente del TamaGolem
-     * e permette di stabilire la prossima pietra che verra lanciata
-     */
     public void giraPietre() {
         Elemento primaPietra = pietre.get(0);
 
@@ -102,7 +92,7 @@ public class TamaGolem {
             return (this.getNome().equals(t.getNome()));
         }
         return false;
-   }
+    }
 
     @Override
     public int hashCode() {
