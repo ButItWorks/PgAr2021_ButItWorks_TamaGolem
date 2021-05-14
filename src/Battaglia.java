@@ -13,17 +13,17 @@ public class Battaglia {
     private static final String MSG_GOLEM_MORTO = "il golem \"%s\" e' morto";
     private static final String MSG_DANNI = "%s vince sul %s  => %s infligge %d a %s";
     private static final String SPAZ_LIST_GOL_RIM_GIOC = "****** LISTA GOLEM RIMANENTI GIOCATORE %s ******";
+    private static final String SPAZ_PIETRE_SCORTA = "******* PIETRE NELLA SCORTA *******";
     private static final String SPAZ = "***********************************";
     private static final String SPAZ_SOST_GOL_GIOC = "******** SOSTITUZIONE GOLEM GIOCATORE %s *******";
-    /*private static final String MSG_INIZIO_SCONTRO = "";
-    private static final String MSG_INIZIO_SCONTRO = "";
-    private static final String MSG_INIZIO_SCONTRO = "";
-    private static final String MSG_INIZIO_SCONTRO = "";
-    private static final String MSG_INIZIO_SCONTRO = "";
-    private static final String MSG_INIZIO_SCONTRO = "";
-    private static final String MSG_INIZIO_SCONTRO = "";
-    private static final String MSG_INIZIO_SCONTRO = "";
-    private static final String MSG_INIZIO_SCONTRO = "";*/
+    private static final String MSG_NOME_GOLEM = "Inserire il nome del golem da evocare: ";
+    private static final String MSG_GOLEM_INESISTENTE = "Non esiste un golem con questo nome...riprovare!";
+    private static final String MSG_VINCITORE = "Lo scontro e' terminato, ed il vincitore e'........................%s";
+    private static final String MSG_SET_PIETRE_UGUALE = "Il set di pietre inserite e' esattamente uguale a quello del tamagolem avversario....riprovare!";
+    private static final String MSG_PIETRA_DA_INGURGITARE = "Inserire pietra da fare ingurgitare: ";
+    private static final String MSG_PIETRA_INVALIDA = "Pietra non valida...riprovare!";
+    private static final String MSG_PIETRE_EQUIVALENTI = "Le pietre scagliate sono equivalenti, nessuno subisce danni!";
+    private static final String MSG_EVOCAZIONE = "***********************\nEVOCAZIONE %s\n***********************";
 
     //ATTRIBUTI
     private Giocatore g1;
@@ -65,24 +65,35 @@ public class Battaglia {
         System.out.println(MSG_INIZIO_SCONTRO);
         while(!isBattagliaTerminata) {
             if(!g1.getTamaGolemInCampo().isMorto() && !g2.getTamaGolemInCampo().isMorto()) {
-                this.evocazione(g1, g1.getTamaGolemInCampo());
-                this.evocazione(g2, g2.getTamaGolemInCampo());
+                evocazione(g1, g1.getTamaGolemInCampo());
+
+                //Controllo se il set di pietre e' equivalente
+                boolean isSetPietreEquals = false;
+                do {
+                    evocazione(g2, g2.getTamaGolemInCampo());
+                    isSetPietreEquals = g1.getTamaGolemInCampo().isSetPietreEquals(g2.getTamaGolemInCampo());
+                    if(isSetPietreEquals) {
+                        System.out.println(MSG_SET_PIETRE_UGUALE);
+                        resetPietreGolem(g2.getTamaGolemInCampo());
+                        Utilities.clearScreenStop();
+                    }
+                } while (isSetPietreEquals);
             }
             else if(g1.getTamaGolemInCampo().isMorto()) {
                 if(g1.isSquadraEsausta()) {
                     isBattagliaTerminata = true;
                     vincitore = g2;
                 } else {
-                    System.out.println(String.format("******** SOSTITUZIONE GOLEM GIOCATORE %s *******", g1.getNome()));
+                    System.out.println(String.format(SPAZ_SOST_GOL_GIOC, g1.getNome()));
                     stampaGolemRimanenti(g1);
                     TamaGolem golemDaEvocare = new TamaGolem();
                     String nomeGolemDaEvocare = "";
 
                     do {
-                        nomeGolemDaEvocare = InputDati.leggiStringa("Inserire il nome del golem da evocare: ");
+                        nomeGolemDaEvocare = InputDati.leggiStringa(MSG_NOME_GOLEM);
                         golemDaEvocare = new TamaGolem(nomeGolemDaEvocare);
                         if(!g1.getSquadra().contains(golemDaEvocare)) {
-                            System.out.println("Non esiste un golem con questo nome...riprovare!");
+                            System.out.println(MSG_GOLEM_INESISTENTE);
                         } else {
                             for (TamaGolem golem : g1.getSquadra()) {
                                 if(golem.equals(golemDaEvocare)) {
@@ -91,7 +102,18 @@ public class Battaglia {
                             }
                         }
                     } while (!g1.getSquadra().contains(golemDaEvocare) || golemDaEvocare.isMorto());
-                    evocazione(g1, golemDaEvocare);
+
+                    //Controllo se il set di pietre e' equivalente
+                    boolean isSetPietreEquals = false;
+                    do {
+                        evocazione(g1, golemDaEvocare);
+                        isSetPietreEquals = g2.getTamaGolemInCampo().isSetPietreEquals(g1.getTamaGolemInCampo());
+                        if(isSetPietreEquals) {
+                            System.out.println(MSG_SET_PIETRE_UGUALE);
+                            resetPietreGolem(g1.getTamaGolemInCampo());
+                            Utilities.clearScreenStop();
+                        }
+                    } while (isSetPietreEquals);
                 }
             }
             else {
@@ -100,16 +122,16 @@ public class Battaglia {
                         isBattagliaTerminata = true;
                         vincitore = g1;
                     } else {
-                        System.out.println(String.format("******** SOSTITUZIONE GOLEM GIOCATORE %s *******", g2.getNome()));
+                        System.out.println(String.format(SPAZ_SOST_GOL_GIOC, g2.getNome()));
                         stampaGolemRimanenti(g2);
                         TamaGolem golemDaEvocare = new TamaGolem();
                         String nomeGolemDaEvocare = "";
 
                         do {
-                            nomeGolemDaEvocare = InputDati.leggiStringa("Inserire il nome del golem da evocare: ");
+                            nomeGolemDaEvocare = InputDati.leggiStringa(MSG_NOME_GOLEM);
                             golemDaEvocare = new TamaGolem(nomeGolemDaEvocare);
                             if (!g2.getSquadra().contains(golemDaEvocare)) {
-                                System.out.println("Non esiste un golem con questo nome...riprovare!");
+                                System.out.println(MSG_GOLEM_INESISTENTE);
                             } else {
                                 for (TamaGolem golem : g2.getSquadra()) {
                                     if (golem.equals(golemDaEvocare)) {
@@ -118,10 +140,22 @@ public class Battaglia {
                                 }
                             }
                         } while (!g2.getSquadra().contains(golemDaEvocare) || golemDaEvocare.isMorto());
-                        evocazione(g2, golemDaEvocare);
+
+                        //Controllo se il set di pietre e' equivalente
+                        boolean isSetPietreEquals = false;
+                        do {
+                            evocazione(g2, golemDaEvocare);
+                            isSetPietreEquals = g1.getTamaGolemInCampo().isSetPietreEquals(g2.getTamaGolemInCampo());
+                            if(isSetPietreEquals) {
+                                System.out.println(MSG_SET_PIETRE_UGUALE);
+                                resetPietreGolem(g2.getTamaGolemInCampo());
+                                Utilities.clearScreenStop();
+                            }
+                        } while (isSetPietreEquals);
                     }
                 }
             }
+
 
             Utilities.clearScreen();
 
@@ -129,7 +163,7 @@ public class Battaglia {
                 this.scontroTamaGolem(g1.getTamaGolemInCampo(), g2.getTamaGolemInCampo());
             }
         }
-        System.out.println("Lo scontro e' terminato, ed il vincitore e'........................" + vincitore.getNome().toUpperCase());
+        System.out.println(String.format(MSG_VINCITORE, vincitore.getNome().toUpperCase()));
     }
 
     /**
@@ -166,7 +200,7 @@ public class Battaglia {
             int potenzaIterazione = 0;
 
             if(pietraGolem1.equals(pietraGolem2)) {
-                System.out.println("Le pietre scagliate sono equivalenti, nessuno subisce danni!");
+                System.out.println(MSG_PIETRE_EQUIVALENTI);
             } else {
                 if(potenzaIterazione(iterazioniPrimoElemento, pietraGolem2) != 0) {
                     potenzaIterazione = potenzaIterazione(iterazioniPrimoElemento, pietraGolem2);
@@ -187,18 +221,24 @@ public class Battaglia {
                     }
                 }
             }
-            InputDati.leggiStringa("Premere invio per continuare...");
-            Utilities.clearScreen();
+            Utilities.clearScreenStop();
             golem1.giraPietre();
             golem2.giraPietre();
         }
+    }
+
+    private void resetPietreGolem(TamaGolem golem) {
+        for (Elemento pietra : golem.getPietre()) {
+            scortaPietre.put(pietra, scortaPietre.get(pietra) + 1);
+        }
+        golem.setPietre(new ArrayList<Elemento>());
     }
 
     /**
      * metodo per mostrare al giocatore le pietre nella riserva, che quindi può scegliere
      */
     private void stampaPietreTotali() {
-        System.out.println("****** PIETRE NELLA SCORTA ******");
+        System.out.println(SPAZ_PIETRE_SCORTA);
         int counter = 1;
 
         for (Elemento pietra : scortaPietre.keySet()) {
@@ -206,7 +246,7 @@ public class Battaglia {
             counter++;
         }
 
-        System.out.println("********************************");
+        System.out.println(SPAZ);
     }
 
     /**
@@ -216,16 +256,16 @@ public class Battaglia {
     private void sceltaPietra(String nomeGolem, ArrayList<Elemento> pietreGolem)
     {
         Utilities.clearScreen();
-        System.out.println("********* Evocazione " + nomeGolem + " *********");
+        System.out.println(String.format(MSG_EVOCAZIONE, nomeGolem));
         stampaPietreTotali();
         String elementoPietra = "";
         Elemento pietra;
 
         do {
-            elementoPietra = InputDati.leggiStringa("Inserire pietra da fare ingurgitare: ");
-            pietra = new Elemento(elementoPietra);
+            elementoPietra = InputDati.leggiStringa(MSG_PIETRA_DA_INGURGITARE);
+            pietra = new Elemento(elementoPietra.toUpperCase());
             if(!scortaPietre.containsKey(pietra) || scortaPietre.get(pietra) == 0) {
-                System.out.println("Pietra non valida...riprovare!");
+                System.out.println(MSG_PIETRA_INVALIDA);
             }
         } while (!scortaPietre.containsKey(pietra) || scortaPietre.get(pietra) == 0);
 
@@ -236,6 +276,7 @@ public class Battaglia {
     /**
      * metodo che gestisce l'evocazione del TamaGolem
      * @param giocatore
+     * @param golemDaEvocare
      */
     private void evocazione(Giocatore giocatore, TamaGolem golemDaEvocare) {
         Utilities.clearScreen();

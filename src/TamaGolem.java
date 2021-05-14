@@ -86,6 +86,16 @@ public class TamaGolem {
         pietre.set(pietre.size() - 1, primaPietra);
     }
 
+    public boolean isSetPietreEquals(TamaGolem golemAvversario) {
+        ArrayList<Elemento> pietreAvversario = golemAvversario.getPietre();
+        for (int i = 0; i < pietre.size(); i++) {
+            if(!pietre.get(i).equals(pietreAvversario.get(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     @Override
     public boolean equals(Object o) {
         if(o instanceof TamaGolem) {

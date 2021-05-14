@@ -15,17 +15,17 @@ public class SetupBattaglia {
     private static final int MAX_N_VALUE_MEDIA = 8;
     private static final int MIN_N_VALUE_DIFFICILE = 9;
     private static final int MAX_N_VALUE_DIFFICILE = 10;
-    private static final String[] NOMI_ELEMENTI = { "Nikita", "Robb", "TetoFonta", "Enrico", "Massimiliano", "Lange", "Ilaria", "Jacopo", "Saetti", "Serina" };
+    private static final String[] NOMI_ELEMENTI = { "NIKITA", "ROBB", "TETOFONTA", "ENRICO", "MASSIMILIANO", "LANGE", "ILARIA", "JACOPO", "SAETTI", "SERINA" };
     private static final int VITA_GOLEM = 20;
     private static final String SEL_DIF = "Difficolta' di gioco: ";
     private static final String DIF_FAC = "1)  facile";
     private static final String DIF_MED = "2)  intermedio";
     private static final String DIF_DIF = "3)  difficile";
-    private static final String SPAZ_CONF_N_GIOCATORE = "\"************ CONFIGURAZIONE %s GIOCATORE ************\"";
+    private static final String SPAZ_CONF_N_GIOCATORE = "************ CONFIGURAZIONE %s GIOCATORE ************";
     private static final String INS_NOME_GIOCATORE = "Inserire il nome del %s giocatore: ";
     private static final String INS_NOME_GOLEM = "Inserire il nome del %d golem: ";
     private static final String SPAZ_CREAZ_SQUADRA = "============== CREAZIONE SQUADRA ==============";
-    private static final String NOME_GIOCATORE = "\"************ %s ************%n\"";
+    private static final String NOME_GIOCATORE = "************ %s ************%n";
     private static final String SPAZ_SQUADRA = "============== SQUADRA ==============";
     private static final String SCELTA = "Si prega di effettuare una scelta: ";
     private static final String DIF_SCEL_FAC = "************ DIFFICOLTA SCELTA: FACILE ************";
@@ -36,6 +36,7 @@ public class SetupBattaglia {
     private static final String SCEL_NUM_EL_DIF = "Scegliere il numero di elementi esistenti( da 9 a 10 ): ";
     private static final String PRIMO = "Primo";
     private static final String SECONDO = "Secondo";
+    private static final String EQUILIBRIO = "----------------------------- EQUILIBRIO -----------------------------";
 
     //VARIABILI DI GIOCO
     private static int numeroElementi;
@@ -103,6 +104,7 @@ public class SetupBattaglia {
      * @param equilibrio
      */
     private static void stampaEquilibrio(Equilibrio equilibrio) {
+        System.out.println(EQUILIBRIO);
         for (Elemento el : equilibrio.getTotaleElementi()) {
             System.out.println("**** " + el.getNomeElemento() + " ****");
             for(Iterazione it : equilibrio.getIterazioniElemento(el)) {
@@ -178,18 +180,32 @@ public class SetupBattaglia {
         //Creazione giocatori
         Giocatore primoGiocatore = creazioneGiocatore(PRIMO);
         Utilities.clearScreen();
-        Giocatore secondoGiocatore = creazioneGiocatore(SECONDO);
+
+        Giocatore secondoGiocatore = new Giocatore();
+        boolean isNomeUguale = false;
+        do {
+            secondoGiocatore = creazioneGiocatore(SECONDO);
+            isNomeUguale = secondoGiocatore.getNome().equalsIgnoreCase(primoGiocatore.getNome());
+            if (isNomeUguale) {
+                System.out.println("Esiste gia' un giocatore con questo nome....riprovare!");
+                Utilities.clearScreenStop();
+            }
+        } while(isNomeUguale);
         Utilities.clearScreen();
 
         //Stampa giocatori
         stampaGiocatore(primoGiocatore);
         stampaGiocatore(secondoGiocatore);
+
         //Pulire console
         Utilities.clearScreen();
 
         //Realizzazione della battaglia
         Battaglia battaglia = new Battaglia(primoGiocatore, secondoGiocatore, scortaPietre, equilibrio, numeroPietrePerGolem);
         battaglia.scontro();
+
+        //Stampa dell' equilibrio
+        stampaEquilibrio(equilibrio);
     }
 
 }
