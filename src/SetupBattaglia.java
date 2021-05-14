@@ -56,14 +56,12 @@ public class SetupBattaglia {
     /**
      * stampa il menu della difficoltà
      */
-    private static void menuDifficolta()
-    {
+    private static void menuDifficolta() {
         System.out.println(SEL_DIF);
         System.out.println(DIF_FAC);
         System.out.println(DIF_MED);
         System.out.println(DIF_DIF);
     }
-
 
     private static void menuDifficoltaSwitch(int difficolta) {
         switch (difficolta) {
