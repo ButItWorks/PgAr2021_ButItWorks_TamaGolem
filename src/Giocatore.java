@@ -50,6 +50,7 @@ public class Giocatore {
         return numeroGolemVivi;
     }
 
+    //questo metodo a cosa serve??
     public boolean scambiaGolemInCampo(String nomeTamaGolem) {
         boolean trovato = false;
         TamaGolem golemCercato = new TamaGolem();
@@ -68,7 +69,10 @@ public class Giocatore {
 
         return false;
     }
-
+    /**
+     *
+     * @return true se la squadra è esausta
+     */
     public boolean isSquadraEsausta() {
         for (TamaGolem golem : this.getSquadra()) {
             if(!golem.isMorto()) {
