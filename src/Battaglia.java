@@ -56,7 +56,7 @@ public class Battaglia {
     }
 
     /**
-     * metogo che gestisce tutto il match
+     * metodo che gestisce tutto il match
      */
     public void scontro() {
         boolean isBattagliaTerminata = false;

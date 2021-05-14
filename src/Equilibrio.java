@@ -5,14 +5,15 @@ public class Equilibrio {
     HashMap<Elemento, Set<Iterazione>> elementi = new HashMap<>();
     int numeroIterazioni = 0;
 
+    //costruttore
     public Equilibrio(List<Elemento> elementi, int vitaGolem) {
         creaEquilibrio(elementi, vitaGolem);
     }
 
+    //getters
     public int getNumeroElementi() {
         return this.elementi.size();
     }
-
     public int getNumeroIterazioni() {
         return numeroIterazioni;
     }
@@ -45,17 +46,16 @@ public class Equilibrio {
         return isIterazioneAggiunta;
     }
 
+    //setters
     public Set<Iterazione> getInsiemeIterazioni() {
         Set<Iterazione> totIterazioni = new HashSet<>();
         for (Set<Iterazione> iterazioniElemento : elementi.values())
             totIterazioni.addAll(iterazioniElemento);
         return totIterazioni;
     }
-
     public Set<Iterazione> getIterazioniElemento(Elemento elemento) {
         return elementi.getOrDefault(elemento, null);
     }
-
     public Set<Elemento> getTotaleElementi() {
         return elementi.keySet();
     }
